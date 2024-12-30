@@ -1,0 +1,17 @@
+{% include 'base.html.twig' %}
+
+{% block title %}Service stock update{% endblock %}
+{% include 'layouts/_flash_messages.html.twig' %}
+{% block body %}
+    <div class="container">
+     <h1>Update stock: {{service.name}}</h1>
+
+     {{ form_start(form) }}
+        {{ form_row(form.qte,  {'attr':{'class':'form form-control'}}) }}
+        <br>
+        {{ form_row(form.service,  {'attr':{'class':'form form-control'}}) }}
+        <br>
+        <input type="submit" class="btn-success btn btn-block">
+     {{ form_end(form) }}
+    </div>
+{% endblock %}

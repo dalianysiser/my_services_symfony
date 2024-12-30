@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Service index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Services</h1>
+     {% include 'layouts/_flash_messages.html.twig' %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for service in services %}
+            <tr>
+                <td>{{ service.name }}</td>
+                <td>{{ service.description |slice(0, 60)}} ... </td>
+                <td>{{ service.price }}</td>
+                <td>{{ service.stock }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('app_service_show', {'id': service.id}) }}">show</a>
+                    <a class="btn btn-outline-primary" href="{{ path('app_service_edit', {'id': service.id}) }}">edit</a>
+                    <a class="btn btn-outline-info" href="{{ path('app_service_update_stock', {'id': service.id, 'cant': 0}) }}">Stock</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ path('app_service_new') }}">Create new</a>
+</div>
+{% endblock %}

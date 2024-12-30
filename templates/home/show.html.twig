@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorys{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card mb-12" style="margin-top: 70px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{asset('uploads/images/'~service.image)}}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title text-succes">{{service.name}}</h5>
+                    <p class="card-text">{{service.description}}</p>
+                    <h3>{{service.price}} EUR</h3>
+                    <a href="{{ path('app_cart_new',{'id':service.id}) }}" class="text-success text-decoration-none">Add to cart</a>
+                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+   <h2>Latest services added</h2>
+
+   <div class="row">
+        {% include 'layouts/_flash_messages.html.twig' %}
+            {% for service in services %}
+                <div class="col-md-3 mt-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{asset('uploads/images/'~service.image)}}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <a style="text=decoration:none;color:green" href="{{ path('app_home_service_show',{'id':service.id}) }}"><h5 class="card-title">{{service.name}}</h5></a>
+                                <p class="card-text">{{service.description|slice(0,50)}} ...</p>
+                                <h3>{{service.price}} EUR</h3>
+                                <a href="{{ path('app_cart_new',{'id':service.id}) }}" class="text-success text-decoration-none">Add to cart</a>
+                            </div>
+                    </div>
+                </div>
+            
+        {% endfor %} 
+     </div>
+   
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+{%  block javascripts %}
+    {% block importmap %}{{ importmap('app') }}{% endblock %}
+     <script src="{{asset('assets/js/common.js ')}}"></script>
+{% endblock %}
+{% block body %}
+<div class="container security-form">
+    <div class="login-form">
+        <h1>Register</h1>
+
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm) }}
+            {{ form_widget(registrationForm.firstName, {'attr':{'class':'form-control', 'placeholder':'First Name'}}) }}
+            {{ form_errors(registrationForm.firstName, {'attr':{'class':'text-red'}}) }}
+            <br>
+            {{ form_widget(registrationForm.lastName, {'attr':{'class':'form-control', 'placeholder':'Last Name'}}) }}
+            {{ form_errors(registrationForm.lastName) }}
+            <br>
+            {{ form_widget(registrationForm.email, {'attr':{'class':'form-control', 'placeholder':'Email'}}) }}
+            {{ form_errors(registrationForm.email) }}
+            <br>
+            {{ form_widget(registrationForm.plainPassword,{'attr':{'class':'form-control', 'placeholder':'Password'}}) }}
+            {{ form_errors(registrationForm.plainPassword) }}
+            <br>
+            {{ form_row(registrationForm.agreeTerms) }}
+            <br><br>
+            <button type="submit" class="btn btn-block btn-primary">Register</button>
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
+{% endblock %}

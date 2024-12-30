@@ -1,0 +1,66 @@
+<style>
+    table{
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td{
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    thead{
+        background: #f2f2f2;
+    }
+    tbody tr:nth-child(odd){
+        background: #f9f9f9;
+    }
+</style>
+<div class="container">
+        <h2>Invoice: {{order.id}}</h2>
+        <hr><hr>
+        <span>Date: {{order.createdAt|date}}</span>
+        <br><br><br>
+        <h5>Customer Information</h5>
+        <table class="table table-bordered">
+        <thead>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>City</th>
+        </thead>
+        <tr>
+            <td>{{order.firstName}}</td>
+            <td>{{order.lastName}}</td>
+            <td>{{order.phone}}</td>
+            <td>{{ order.address }}</td>
+            <td>{{order.city.name}}</td>
+        </tr>
+    </table>
+    <h5>Order details</h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        {% for service in order.orderServices %}
+            <tr>
+                <td>{{service.service.name}}</td>
+                <td>{{service.service.description|slice(0,80)}}</td>
+                <td>{{service.service.price | number_format (2)}} EUR</td>
+                <td>{{service.qte}}</td>
+                <td>{{(service.service.price * service.qte) | number_format (2)}} EUR</td>
+                
+            </tr>
+            
+        {% endfor %}
+        
+    </table><br><br><br>
+    <span>Delivery costs: {{order.city.shippingCost | number_format (2)}} EUR</span><br>
+    <h2>Total to pay: {{order.totalPrice | number_format (2)}} EUR</h2>
+</div>

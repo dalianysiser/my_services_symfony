@@ -1,0 +1,85 @@
+
+<nav class="navbar navbar-expand-lg border-bottom border-body" data-bs-theme="light" style="background-color: #eab676;">
+  <div class="container">
+    <a class="navbar-brand" href="#">Services</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{path('app_home')}}">Home</a>
+        </li>
+        {% if categories is defined %}
+          {% if categories|length > 0 %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+              </a>
+              <ul class="dropdown-menu">
+                {% for category in categories %}
+                  <li><a class="dropdown-item" style="font-weight:bolder" href="{{ path('app_category') }}">{{category.name}}</a></li>
+                  {% for subCategory in category.subCategories %}
+                    <li><a class="dropdown-item" href="{{ path('app_home_service_filter',{'id':subCategory.id}) }}">{{subCategory.name}}</a></li>
+                  {% endfor %}
+                  <li><hr class="dropdown-divider"></li>
+                {% endfor %}
+                
+              </ul>
+            </li>
+          {% endif %}
+        
+        {% endif %}
+        
+        {% if is_granted("ROLE_ADMIN") %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Administration
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{ path('app_category') }}">Categories</a></li>
+               <li><a class="dropdown-item" href="{{ path('app_sub_category_index') }}">Sub Categories</a></li>
+              <li><a class="dropdown-item" href="{{ path('app_service_index') }}">Services</a></li>
+              <li><a class="dropdown-item" href="{{ path('app_service_history') }}">Stock History</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{{ path('app_user') }}">Users</a></li>
+              <li><a class="dropdown-item" href="{{ path('app_city_index') }}">City</a></li>
+            </ul>
+          </li>
+        {% endif %}
+       
+        {% if is_granted("ROLE_EDITOR") %}
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Orders
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ path('app_orders_show', {'type':'is-completed'}) }}">Orders Delivered</a></li>
+                <li><a class="dropdown-item" href="{{ path('app_orders_show', {'type':'pay-on-stripe-not-delivered'}) }}"> Orders paid online not delivered</a></li>
+                <li><a class="dropdown-item" href="{{ path('app_orders_show', {'type':'pay-on-stripe-is-delivered'}) }}"> Orders paid online delivered</a></li>
+              </ul>
+          </li>
+        {% endif %}
+         {% if app.user == false %}
+          <li class="nav-item">
+            <a class="nav-link"  href="{{ path('app_register') }}" aria-disabled="true">Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  href="{{ path('app_login') }}" aria-disabled="true">Log in</a>
+          </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link"  href="{{ path('app_cart') }}" aria-disabled="true">My cart</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"  href="{{ path('app_logout') }}" aria-disabled="true">Log out</a>
+          </li>
+        {% endif %}
+      </ul>
+      <form data-turbo="false" method="get" action="{{path('app_search_engine')}}" class="d-flex" role="search">
+        <input name="word" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-dark" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>

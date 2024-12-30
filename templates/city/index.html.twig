@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}City index{% endblock %}
+ {% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.css"/>
+ {% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>City index</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ShippingCost</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for city in cities %}
+            <tr>
+                <td>{{ city.name }}</td>
+                <td>{{ city.shippingCost }}</td>
+                <td>
+                    <a class="btn btn-outline-primary" href="{{ path('app_city_show', {'id': city.id}) }}">show</a>
+                    <a class="btn btn-outline-primary" href="{{ path('app_city_edit', {'id': city.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('app_city_new') }}">Create new</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorys{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Services</h1>
+    <div class="row">
+        {% include 'layouts/_flash_messages.html.twig' %}
+            {% for service in services %}
+                <div class="col-md-3 mt-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{asset('uploads/images/'~service.image)}}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <a style="text=decoration:none;color:green" href="{{ path('app_home_service_show',{'id':service.id}) }}"><h5 class="card-title">{{service.name}}</h5></a>
+                                <p class="card-text">{{service.description|slice(0,50)}} ...</p>
+                                <h3>{{service.price}} EUR</h3>
+                                <a href="{{ path('app_cart_new',{'id':service.id}) }}"  class="text-success text-decoration-none">Add to cart</a>
+                            </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>No services found.</p>
+        {% endfor %}
+     </div>
+    {{knp_pagination_render(services, 'layouts/pagination_template.html.twig')}}
+</div>
+{% endblock %}

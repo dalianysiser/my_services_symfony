@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Service index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Stock History</h1>
+     {% include 'layouts/_flash_messages.html.twig' %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Stock Added</th>
+                <th>Date</th>
+                <th>User</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for service in servicesH %}
+            <tr>
+                <td>{{ service.service.name }}</td>
+                <td>{{ service.qte}} </td>
+                <td>{{ service.createdAt | date }}</td>
+                <td>{{ service.user.firstName ~' '~service.user.lastName }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('app_service_show', {'id': service.id}) }}">show</a>
+                    <a class="btn btn-outline-primary" href="{{ path('app_service_edit', {'id': service.id}) }}">edit</a>
+                    <a class="btn btn-outline-info" href="{{ path('app_service_update_stock', {'id': service.id, 'cant': 0}) }}">Stock</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ path('app_service_new') }}">Create new</a>
+</div>
+{% endblock %}
